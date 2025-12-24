@@ -13,12 +13,11 @@ class _HmMoreListState extends State<HmMoreList> {
     return SliverGrid.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        mainAxisExtent: 300,
         mainAxisSpacing: 10,
         crossAxisSpacing: 10,
-        
+        mainAxisExtent: 150,
       ),
-      itemBuilder: (BuildContext buildcontex, int index) {
+      itemBuilder: (BuildContext context, int index) {
         return Container(
           color: Colors.blue,
           alignment: Alignment.center,

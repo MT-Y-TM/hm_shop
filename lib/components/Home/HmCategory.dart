@@ -11,17 +11,16 @@ class _HmCategoryState extends State<HmCategory> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 100,
+      height: 60,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-
-        itemBuilder: (BuildContext buildcontex, int index) {
+        itemCount: 30,
+        itemBuilder: (BuildContext context, int index) {
           return Container(
-            width: 80,
-            height: 100,
+            width: 70,
+            margin: EdgeInsets.symmetric(horizontal: 10),
             color: Colors.blue,
             alignment: Alignment.center,
-            margin: EdgeInsets.symmetric(horizontal: 20),
             child: Text("分类$index", style: TextStyle(color: Colors.white)),
           );
         },
