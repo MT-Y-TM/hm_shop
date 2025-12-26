@@ -17,6 +17,12 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   List<BannerItem> _bannerList = [];
   List<CategoryItem> _categoryList = [];
+  SpecialOfferResult _specialOfferResult = SpecialOfferResult(
+    id: "",
+    title: "",
+    subTypes: [],
+  );
+
   List<Widget> _getChildren() {
     return [
       SliverToBoxAdapter(child: HmSlider(bannerList: _bannerList)),
@@ -28,7 +34,7 @@ class _HomeViewState extends State<HomeView> {
       SliverToBoxAdapter(
         child: Padding(
           padding: EdgeInsetsGeometry.symmetric(horizontal: 10),
-          child: HmSuggestion(),
+          child: HmSuggestion(specialOfferResult: _specialOfferResult),
         ),
       ),
       SliverToBoxAdapter(child: SizedBox(height: 10)),
@@ -52,6 +58,11 @@ class _HomeViewState extends State<HomeView> {
       HmMoreList(),
     ];
   }
+  //获取商品列表
+  void _getProductList() async {
+    _specialOfferResult = await getProductListAPI();
+    setState(() {});
+  }
 
   @override
   void initState() {
@@ -59,6 +70,7 @@ class _HomeViewState extends State<HomeView> {
     super.initState();
     _getBannerList();
     _getCategoryList();
+    _getProductList();
   }
 
   //获取轮播图列表

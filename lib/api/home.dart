@@ -20,3 +20,10 @@ Future<List<CategoryItem>> getCategoryListAPI() async {
     return CategoryItem.fromJSON(item as Map<String, dynamic>);
   }).toList();
 }
+
+//获取商品列表
+Future<SpecialOfferResult> getProductListAPI() async {
+  return SpecialOfferResult.fromJSON(
+    await dioRequest.get(HttpConstants.PRODUCT_LIST),
+  );
+}

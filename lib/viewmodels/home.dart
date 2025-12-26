@@ -323,3 +323,103 @@ class CategoryItem {
     );
   }
 }
+
+
+class SpecialOfferResult {
+  String id;
+  String title;
+  List<SpecialOfferSubType> subTypes;
+
+  SpecialOfferResult({
+    required this.id,
+    required this.title,
+    required this.subTypes,
+  });
+
+  factory SpecialOfferResult.fromJSON(Map<String, dynamic> json) {
+    return SpecialOfferResult(
+      id: json['id'] ?? "",
+      title: json['title'] ?? "",
+      subTypes: (json['subTypes'] as List)
+          .map((item) => SpecialOfferSubType.fromJSON(item as Map<String, dynamic>))
+          .toList(),
+    );
+  }
+}
+
+class SpecialOfferSubType {
+  String id;
+  String title;
+  SpecialOfferGoodsItems goodsItems;
+
+  SpecialOfferSubType({
+    required this.id,
+    required this.title,
+    required this.goodsItems,
+  });
+
+  factory SpecialOfferSubType.fromJSON(Map<String, dynamic> json) {
+    return SpecialOfferSubType(
+      id: json['id'] ?? "",
+      title: json['title'] ?? "",
+      goodsItems: SpecialOfferGoodsItems.fromJSON(json['goodsItems'] as Map<String, dynamic>),
+    );
+  }
+}
+
+class SpecialOfferGoodsItems {
+  int counts;
+  int pageSize;
+  int pages;
+  int page;
+  List<SpecialOfferGoodsItem> items;
+
+  SpecialOfferGoodsItems({
+    required this.counts,
+    required this.pageSize,
+    required this.pages,
+    required this.page,
+    required this.items,
+  });
+
+  factory SpecialOfferGoodsItems.fromJSON(Map<String, dynamic> json) {
+    return SpecialOfferGoodsItems(
+      counts: json['counts'] ?? 0,
+      pageSize: json['pageSize'] ?? 0,
+      pages: json['pages'] ?? 0,
+      page: json['page'] ?? 0,
+      items: (json['items'] as List)
+          .map((item) => SpecialOfferGoodsItem.fromJSON(item as Map<String, dynamic>))
+          .toList(),
+    );
+  }
+}
+
+class SpecialOfferGoodsItem {
+  String id;
+  String name;
+  String? desc;
+  String price;
+  String picture;
+  int orderNum;
+
+  SpecialOfferGoodsItem({
+    required this.id,
+    required this.name,
+    required this.desc,
+    required this.price,
+    required this.picture,
+    required this.orderNum,
+  });
+
+  factory SpecialOfferGoodsItem.fromJSON(Map<String, dynamic> json) {
+    return SpecialOfferGoodsItem(
+      id: json['id'] ?? "",
+      name: json['name'] ?? "",
+      desc: json['desc'],
+      price: json['price'] ?? "",
+      picture: json['picture'] ?? "",
+      orderNum: json['orderNum'] ?? 0,
+    );
+  }
+}
