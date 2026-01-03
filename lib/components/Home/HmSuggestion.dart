@@ -65,8 +65,12 @@ class _HmSuggestionState extends State<HmSuggestion> {
             borderRadius: BorderRadius.circular(8),
             child: Image.network(
               errorBuilder: (context, error, stackTrace) {
-                return Image.asset("lib/assets/home_cmd_inner.png",width: 100,height: 140,);
-                },
+                return Image.asset(
+                  "lib/assets/home_cmd_inner.png",
+                  width: 100,
+                  height: 140,
+                );
+              },
               list[index].picture,
               width: 100,
               height: 140,
