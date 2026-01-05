@@ -107,6 +107,34 @@ class SpecialOfferGoodsItems {
   }
 }
 
+class SpecialOfferGoodsDetailsItems {
+  int counts;
+  int pageSize;
+  int pages;
+  int page;
+  List<GoodDetailItem> items;
+
+  SpecialOfferGoodsDetailsItems({
+    required this.counts,
+    required this.pageSize,
+    required this.pages,
+    required this.page,
+    required this.items,
+  });
+
+  factory SpecialOfferGoodsDetailsItems.fromJSON(Map<String, dynamic> json) {
+    return SpecialOfferGoodsDetailsItems(
+      counts: json['counts'] ?? 0,
+      pageSize: json['pageSize'] ?? 0,
+      pages: json['pages'] ?? 0,
+      page: json['page'] ?? 0,
+      items: (json['items'] as List)
+          .map((item) => GoodDetailItem.formJSON(item as Map<String, dynamic>))
+          .toList(),
+    );
+  }
+}
+
 class SpecialOfferGoodsItem {
   String id;
   String name;
@@ -135,6 +163,8 @@ class SpecialOfferGoodsItem {
     );
   }
 }
+
+
 
 class GoodDetailItem extends SpecialOfferGoodsItem {
   int payCount = 0;
