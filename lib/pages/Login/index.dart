@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:hm_shop/api/user.dart';
 import 'package:hm_shop/components/Login/LoginTextField.dart';
 import 'package:hm_shop/utils/Toastutils.dart';
 
@@ -20,6 +22,35 @@ class _LoginPageState extends State<LoginPage> {
   void _changeCheckedStyle(bool? value) {
     _isChecked = value ?? false;
     setState(() {});
+  }
+
+  Future<void> _login() async {
+    // 1. 【关键】发起请求前先收起键盘，防止键盘收回时的 UI 抖动导致 SnackBar 报错
+    FocusScope.of(context).unfocus();
+
+    try {
+      final res = await loginAPI({
+        "account": _usernameController.text,
+        "password": _passwordController.text,
+      });
+
+      if (!mounted) return;
+      print("登录成功: $res");
+      ToastUtils.show("登录成功", context);
+      // 成功后直接返回，不要在此时弹 SnackBar，可以在回到首页后再弹
+      Navigator.pop(context);
+    } catch (e) {
+      print("登录失败详情: $e");
+      if (!mounted) return;
+      // 2. 这里的错误处理要更细致
+      String errorMsg = "登录失败，请重试";
+      if (e is DioException && e.response?.data != null) {
+        // 假设后端返回 {"message": "账号不存在"}
+        errorMsg = e.response?.data['message'] ?? errorMsg;
+      }
+      // print("登录失败详情: ${(e as DioException).message}");
+      ToastUtils.show((e as DioException).message ?? "登录失败，请重试", context);
+    }
   }
 
   @override
@@ -65,7 +96,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 20),
 
-                // 使用你封装的组件：密码框（isPassword 为 true）
                 LoginTextField(
                   labelText: "请输入密码",
                   isPassword: true,
@@ -75,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                       // print("请输入密码");
                       return "请输入密码";
                     }
-                    if (!RegExp(r'^[a-z][A-Z][0-9]{6,16}$').hasMatch(value)) {
+                    if (!RegExp(r'^[0-9a-zA-Z]{6,16}$').hasMatch(value)) {
                       // print("密码必须包含一个小写字母、一个大写字母和6-16位数字");
                       return "密码必须包含一个小写字母、一个大写字母和6-16位数字";
                     }
@@ -139,8 +169,11 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: _isChecked
                         ? () {
                             if (_formKey.currentState!.validate()) {
-                              // print("登陆成功");
-                              ToastUtils.show("登陆成功", context);
+                              print(
+                                "准备发送数据： account: ${_usernameController.text}, password: ${_passwordController.text}",
+                              );
+                              _login();
+                              // ToastUtils.show("登陆成功", context);
                             }
                           }
                         : () {

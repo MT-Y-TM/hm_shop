@@ -11,6 +11,7 @@ class Diorequest {
       ..receiveTimeout = Duration(seconds: GlobalConstans.TIME_OUT);
 
     //拦截器
+    _addInterceptor();
   }
   void _addInterceptor() {
     _dio.interceptors.add(
@@ -21,10 +22,17 @@ class Diorequest {
         onResponse: (response, handler) {
           if (response.statusCode! >= 200 && response.statusCode! < 300) {
             handler.next(response);
+            return;
           }
+          handler.reject(DioException(requestOptions: response.requestOptions));
         },
         onError: (error, handler) {
-          handler.reject(error);
+          handler.reject(
+            DioException(
+              requestOptions: error.requestOptions,
+              message: error.response?.data["msg"] ?? "",
+            ),
+          );
         },
       ),
     );
@@ -32,6 +40,10 @@ class Diorequest {
 
   get(String url, {Map<String, dynamic>? params}) {
     return _hanldResponse(_dio.get(url, queryParameters: params));
+  }
+
+  Future<dynamic> post(String url, {Map<String, dynamic>? data}) {
+    return _hanldResponse(_dio.post(url, data: data));
   }
 
   //进一步处理返回结果
@@ -44,9 +56,12 @@ class Diorequest {
       if (data["code"] == GlobalConstans.SUCCESS_CODE) {
         return data["result"];
       }
-      throw Exception(data["msg"]);
+      throw DioException(
+        requestOptions: res.requestOptions,
+        message: data["msg"] ?? "数据加载异常",
+      );
     } catch (e) {
-      throw Exception(e);
+      rethrow; //不改变原来的输出
     }
   }
 }
