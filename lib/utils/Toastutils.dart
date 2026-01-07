@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 
 class ToastUtils {
+  static bool showLoading = false;
   static void show(String msg, BuildContext context) {
+    if (ToastUtils.showLoading) {
+      return;
+    }
+    ToastUtils.showLoading = true;
+    Future.delayed(Duration(seconds: 3), () {
+      ToastUtils.showLoading = false;
+    });
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         width: 120,
