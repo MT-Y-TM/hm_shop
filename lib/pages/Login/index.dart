@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hm_shop/api/user.dart';
 import 'package:hm_shop/components/Login/LoginTextField.dart';
+import 'package:hm_shop/stores/UserController.dart';
 import 'package:hm_shop/utils/Toastutils.dart';
 
 class LoginPage extends StatefulWidget {
@@ -17,6 +19,8 @@ class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  final UserController _userController = Get.find();
 
   // 同意条款状态切换函数
   void _changeCheckedStyle(bool? value) {
@@ -36,6 +40,7 @@ class _LoginPageState extends State<LoginPage> {
 
       if (!mounted) return;
       print("登录成功: $res");
+      _userController.updateUserInfo(res);
       ToastUtils.show("登录成功", context);
       // 成功后直接返回，不要在此时弹 SnackBar，可以在回到首页后再弹
       Navigator.pop(context);
