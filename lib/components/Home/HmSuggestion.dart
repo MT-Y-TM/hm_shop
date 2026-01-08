@@ -59,36 +59,38 @@ class _HmSuggestionState extends State<HmSuggestion> {
   List<Widget> _getChildrenList() {
     List<SpecialOfferGoodsItem> list = _getGoodsItemsTop3();
     return List.generate(list.length, (int index) {
-      return Column(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Image.network(
-              errorBuilder: (context, error, stackTrace) {
-                return Image.asset(
-                  "lib/assets/home_cmd_inner.png",
-                  width: 100,
-                  height: 140,
-                );
-              },
-              list[index].picture,
-              width: 100,
-              height: 140,
-              fit: BoxFit.cover,
-            ),
-          ),
-          SizedBox(height: 10),
-          Container(
-            decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 250, 63, 63),
+      return Expanded(
+        child: Column(
+          children: [
+            ClipRRect(
               borderRadius: BorderRadius.circular(8),
+              child: Image.network(
+                errorBuilder: (context, error, stackTrace) {
+                  return Image.asset(
+                    "lib/assets/home_cmd_inner.png",
+                    // width: 100,
+                    height: 140,
+                  );
+                },
+                list[index].picture,
+                // width: 100,
+                height: 140,
+                fit: BoxFit.cover,
+              ),
             ),
-            child: Text(
-              "￥${list[index].price}",
-              style: TextStyle(color: Colors.white),
+            SizedBox(height: 10),
+            Container(
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 250, 63, 63),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                "￥${list[index].price}",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       );
     });
   }
@@ -112,14 +114,16 @@ class _HmSuggestionState extends State<HmSuggestion> {
         children: [
           _buildHeader(), //顶部内容
           SizedBox(width: 10),
-
+          
           Row(
             children: [
               _buildLeftItem(),
+              SizedBox(width: 10),
               Expanded(
                 child: Row(
                   children: _getChildrenList(),
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  spacing: 10,
                 ),
               ),
             ],
