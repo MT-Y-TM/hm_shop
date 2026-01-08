@@ -6,6 +6,7 @@ import 'package:hm_shop/components/Login/LoginTextField.dart';
 import 'package:hm_shop/stores/TokenManager.dart';
 import 'package:hm_shop/stores/UserController.dart';
 import 'package:hm_shop/utils/Toastutils.dart';
+import 'package:hm_shop/utils/loadingDialog.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -34,6 +35,7 @@ class _LoginPageState extends State<LoginPage> {
     FocusScope.of(context).unfocus();
 
     try {
+      LoadingDialog.show(context);
       final res = await loginAPI({
         "account": _usernameController.text,
         "password": _passwordController.text,
@@ -42,7 +44,8 @@ class _LoginPageState extends State<LoginPage> {
       if (!mounted) return;
       // print("登录成功: $res");
       _userController.updateUserInfo(res);
-      tokenManager.setToken(res.token);//持久化token
+      tokenManager.setToken(res.token); //持久化token
+      LoadingDialog.hide(context);
       ToastUtils.show("登录成功", context);
       Navigator.pop(context);
     } catch (e) {
