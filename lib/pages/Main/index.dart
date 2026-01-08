@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hm_shop/api/user.dart';
 import 'package:hm_shop/pages/Cart/Cart.dart';
 import 'package:hm_shop/pages/Category/Category.dart';
 import 'package:hm_shop/pages/Home/home.dart';
 import 'package:hm_shop/pages/Mine/Mine.dart';
+import 'package:hm_shop/stores/TokenManager.dart';
+import 'package:hm_shop/stores/UserController.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({Key? key}) : super(key: key);
@@ -12,6 +16,25 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  @override
+  void initState() {
+    super.initState();
+    _initUserInfo();
+  }
+
+  final UserController _userController = Get.put(UserController());
+  Future<void> _initUserInfo() async {
+    await tokenManager.init(); //初始化token
+    if (tokenManager.getToken().isNotEmpty) {
+      //如果有信息就赋值token
+      _userController.updateUserInfo(await getUserInfoAPI());
+      print("用户信息: ${_userController.user.value}");
+    }else{
+      print("用户信息为空");
+      print("当前的token: ${tokenManager.getToken()}");
+    }
+  }
+
   // 定义数据 根据数据进行渲染
   final List<Map<String, String>> _tablist = [
     {
@@ -52,22 +75,16 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
-List<Widget> _getChildren(){
-  return [
-    HomeView(),
-    CategoryView(),
-    CartView(),
-    MineView()
-  ];
-}
+  List<Widget> _getChildren() {
+    return [HomeView(), CategoryView(), CartView(), MineView()];
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(child: IndexedStack(
-        index: _currentIndex,
-        children: _getChildren(),
-      )),
+      body: SafeArea(
+        child: IndexedStack(index: _currentIndex, children: _getChildren()),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         items: _getTabBarWidget(),
         currentIndex: _currentIndex,

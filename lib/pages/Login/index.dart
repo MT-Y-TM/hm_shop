@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hm_shop/api/user.dart';
 import 'package:hm_shop/components/Login/LoginTextField.dart';
+import 'package:hm_shop/stores/TokenManager.dart';
 import 'package:hm_shop/stores/UserController.dart';
 import 'package:hm_shop/utils/Toastutils.dart';
 
@@ -39,10 +40,10 @@ class _LoginPageState extends State<LoginPage> {
       });
 
       if (!mounted) return;
-      print("登录成功: $res");
+      // print("登录成功: $res");
       _userController.updateUserInfo(res);
+      tokenManager.setToken(res.token);//持久化token
       ToastUtils.show("登录成功", context);
-      // 成功后直接返回，不要在此时弹 SnackBar，可以在回到首页后再弹
       Navigator.pop(context);
     } catch (e) {
       print("登录失败详情: $e");
