@@ -32,7 +32,7 @@ class _MineViewState extends State<MineView> {
           Obx(() {
             return CircleAvatar(
               radius: 26,
-              backgroundImage: _userController.user.value.id.isNotEmpty
+              backgroundImage: _userController.user.value.avatar.isNotEmpty
                   ? NetworkImage(_userController.user.value.avatar)
                   : AssetImage('lib/assets/goods_avatar.png'),
               backgroundColor: Colors.white,
