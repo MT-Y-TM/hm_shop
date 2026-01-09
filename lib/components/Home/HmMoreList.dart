@@ -53,14 +53,14 @@ class _HmMoreListState extends State<HmMoreList> {
                     text: "¥${widget.recommendList[index].price}",
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize:16,
+                      fontSize: 16,
                       fontWeight: FontWeight.w800,
                     ),
                   ),
                 ),
                 Text(
                   "${widget.recommendList[index].payCount}人付款",
-                  style: TextStyle(color: Colors.grey,fontSize: 12),
+                  style: TextStyle(color: Colors.grey, fontSize: 12),
                 ),
               ],
             ),
@@ -78,11 +78,11 @@ class _HmMoreListState extends State<HmMoreList> {
       gridDelegate:
           // 网格是两列
           SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10,
-            childAspectRatio: 0.75,
-          ),
+        crossAxisCount: 2,
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 10,
+        childAspectRatio: 0.75,
+      ),
       itemBuilder: (BuildContext context, int index) {
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: 10),
