@@ -34,14 +34,14 @@ class _HomeViewState extends State<HomeView> {
 
       SliverToBoxAdapter(
         child: Padding(
-          padding: EdgeInsetsGeometry.symmetric(horizontal: 10),
+          padding: EdgeInsets.symmetric(horizontal: 10),
           child: HmSuggestion(specialOfferResult: _specialOfferResult),
         ),
       ),
       SliverToBoxAdapter(child: SizedBox(height: 10)),
       SliverToBoxAdapter(
         child: Padding(
-          padding: EdgeInsetsGeometry.symmetric(horizontal: 10),
+          padding: EdgeInsets.symmetric(horizontal: 10),
           child: SizedBox(
             height: 300,
             child: Flex(

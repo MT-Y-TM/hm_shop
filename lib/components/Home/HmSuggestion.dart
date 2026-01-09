@@ -123,7 +123,7 @@ class _HmSuggestionState extends State<HmSuggestion> {
                 child: Row(
                   children: _getChildrenList(),
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  spacing: 10,
+                  // spacing: 10,
                 ),
               ),
             ],

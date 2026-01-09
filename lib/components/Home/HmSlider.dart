@@ -56,7 +56,7 @@ class _HmSliderState extends State<HmSlider> {
         height: 40,
         padding: const EdgeInsets.symmetric(horizontal: 20),
         decoration: BoxDecoration(
-          color: Colors.black.withValues(alpha: 0.3),
+          color: Colors.black,//.withValues(alpha: 0.3)
           borderRadius: BorderRadius.circular(20),
         ),
         alignment: Alignment.centerLeft,

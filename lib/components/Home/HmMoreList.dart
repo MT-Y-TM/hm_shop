@@ -53,7 +53,7 @@ class _HmMoreListState extends State<HmMoreList> {
                     text: "¥${widget.recommendList[index].price}",
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 20,
+                      fontSize:16,
                       fontWeight: FontWeight.w800,
                     ),
                   ),
